@@ -6,27 +6,30 @@ import Error404Page from './pages/Error404Page';
 import RegistroPage from './pages/RegistroPage';
 import LoginPage from './pages/LoginPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
-
+import ResultadosPage from './pages/ResultadosPage';
 
 function App() {
     return (
-        <Router>
-            <header className='position-sticky top-0 z-3'>
-                <NavbarComponent/>
-            </header>
-            <main className="flex-grow-1">
-                <Routes>
-                    <Route path='/login' element={<LoginPage />} />
-                    <Route path='/reset-password' element={<ResetPasswordPage />}/>
-                    <Route path="/registro" element={<RegistroPage />}/>
-                    <Route path='*' element={<Error404Page />} />
-                </Routes>
-            </main>
-            <footer className='overflow-x-hidden'>
-                <FooterComponent/>
-            </footer>
-        </Router>
-    )
+        <div className="min-h-screen flex flex-col">
+            <Router>
+                <header className='sticky top-0 z-10'>
+                    <NavbarComponent />
+                </header>
+                <main className="flex-grow">
+                    <Routes>
+                        <Route path='/login' element={<LoginPage />} />
+                        <Route path='/reset-password' element={<ResetPasswordPage />} />
+                        <Route path="/registro" element={<RegistroPage />} />
+                        <Route path='/resultados' element={<ResultadosPage />} />
+                        <Route path='*' element={<Error404Page />} />
+                    </Routes>
+                </main>
+                <footer className='overflow-x-hidden'>
+                    <FooterComponent />
+                </footer>
+            </Router>
+        </div>
+    );
 }
 
-export default App
+export default App;
