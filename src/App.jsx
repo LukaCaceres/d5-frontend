@@ -4,6 +4,8 @@ import NavbarComponent from './components/NavbarComponent';
 import FooterComponent from './components/FooterComponent';
 import Error404Page from './pages/Error404Page';
 import RegistroPage from './pages/RegistroPage';
+import LoginPage from './pages/LoginPage';
+import ResetPasswordPage from './pages/ResetPasswordPage';
 
 
 function App() {
@@ -14,6 +16,8 @@ function App() {
             </header>
             <main className="flex-grow-1">
                 <Routes>
+                    <Route path='/login' element={<LoginPage />} />
+                    <Route path='/reset-password' element={<ResetPasswordPage />}/>
                     <Route path="/registro" element={<RegistroPage />}/>
                     <Route path='*' element={<Error404Page />} />
                 </Routes>
