@@ -1,33 +1,10 @@
-// ProductCard.jsx
 import React from 'react';
-import axios from 'axios';
 import { ShoppingCartIcon } from '@heroicons/react/24/solid';
 import { useNavigate } from 'react-router-dom';
 
 const ProductCard = ({ id, title, price, image, token }) => {
   const navigate = useNavigate();
 
-  const handleAddToCart = async (e) => {
-    e.stopPropagation();
-    e.preventDefault();
-
-    if (!token) {
-      alert('Debes iniciar sesión para agregar al carrito');
-      return;
-    }
-
-    try {
-      await axios.post(
-        'https://doble-cinco-backend.onrender.com/api/carrito/agregar',
-        { productoId: id, cantidad: 1 },
-        { headers: { 'x-token': token } }
-      );
-      alert('Producto agregado al carrito');
-    } catch (error) {
-      console.error('Error al agregar al carrito:', error);
-      alert('Error al agregar al carrito');
-    }
-  };
 
   const goToProductPage = () => navigate(`/producto/${id}`);
 
@@ -49,14 +26,6 @@ const ProductCard = ({ id, title, price, image, token }) => {
           <h3 className="text-2xl font-semibold text-indigo-900 line-clamp-2">{title}</h3>
           <p className="text-lg font-bold text-gray-900">${price.toFixed(2)}</p>
         </div>
-
-        <button
-          onClick={handleAddToCart}
-          aria-label="Agregar al carrito"
-          className="p-2 bg-indigo-900 hover:bg-indigo-600 text-white rounded-md transition cursor-pointer"
-        >
-          <ShoppingCartIcon className="w-5 h-5" />
-        </button>
       </div>
 
       <button
