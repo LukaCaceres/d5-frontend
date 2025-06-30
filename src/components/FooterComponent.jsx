@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaInstagram, FaWhatsapp } from 'react-icons/fa';
-import logo from 'src\assets\images\d5-logo-black.webp'
+import logo from '../assets/images/d5-logo-black.webp'
 const FooterComponent = () => {
     return (
         <footer className="bg-gray py-8 px-4">

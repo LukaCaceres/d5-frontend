@@ -5,7 +5,7 @@ import {
     XMarkIcon,
 } from '@heroicons/react/24/outline';
 import { Link, useNavigate } from 'react-router-dom';
-import logo from 'src\assets\images\d5-logo-black.webp'
+import logo from '../assets/images/d5-logo-black.webp'
 import axios from 'axios';
 
 const NavbarComponent = () => {
