@@ -12,6 +12,7 @@ import ProductoPage from './pages/ProductoPage';
 import ConocenosPage from './pages/ConocenosPage';
 import HomePage from './pages/HomePage';
 import ProductosPage from './pages/ProductosPage';
+import CarritoPage from './pages/CarritoPage';
 
 function App() {
     return (
@@ -31,6 +32,7 @@ function App() {
                         <Route path="/resultados" element={<ResultadosPage />} />
                         <Route path="/producto/:id" element={<ProductoPage />} />
                         <Route path="/conocenos" element={<ConocenosPage />} />
+                        <Route path='/carrito' element={<CarritoPage />} />
                         <Route path="*" element={<Error404Page />} />
                     </Routes>
                 </main>
