@@ -8,6 +8,7 @@ import LoginPage from './pages/LoginPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
 import ResultadosPage from './pages/ResultadosPage';
 import ProductoPage from './pages/ProductoPage';
+import ConocenosPage from './pages/ConocenosPage';
 
 function App() {
     return (
@@ -23,6 +24,7 @@ function App() {
                         <Route path="/registro" element={<RegistroPage />} />
                         <Route path='/resultados' element={<ResultadosPage />} />
                         <Route path="/producto/:id" element={<ProductoPage />} />
+                        <Route path='/conocenos' element={<ConocenosPage />}/>
                         <Route path='*' element={<Error404Page />} />
                     </Routes>
                 </main>
