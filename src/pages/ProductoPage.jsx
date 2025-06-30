@@ -32,7 +32,14 @@ const ProductPage = () => {
         const talleData = producto.talles.find(t => t.talle === talle);
         setStockDisponible(talleData?.stock || 0);
     };
+    const handleVerCarrito = async ()=> {
+        if(!token){
+            alert('Debes iniciar sesión para agregar al carrito');
+            return;
+        }
+        navigate('/carrito')
 
+    }
     const handleAgregarCarrito = async () => {
         if (!token) {
             alert('Debes iniciar sesión para agregar al carrito');
@@ -136,7 +143,7 @@ const ProductPage = () => {
                 </button>
 
                 <button
-                    onClick={() => navigate('/carrito')}
+                    onClick={handleVerCarrito}
                     className="bg-indigo-500 hover:bg-indigo-900 text-white py-3 px-6 rounded text-sm font-medium transition mt-3"
                 >
                     Ver en Carrito
