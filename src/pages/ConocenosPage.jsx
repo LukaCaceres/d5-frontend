@@ -47,14 +47,14 @@ const ConocenosPage = () => {
                 <p className="text-gray-700 mb-4">
                     Nos encontramos San Miguel de Tucumán, Tucumán, Argentina. Realizamos envíos a todo el país y también podés coordinar retiro en la siguiente ubicación.
                 </p>
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2117.1355893360833!2d-65.21134203830806!3d-26.821388858928767!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94225c3e1171fec9%3A0x170c325246c7e661!2sPcia%20de%20Corrientes%20942%2C%20T4000%20San%20Miguel%20de%20Tucum%C3%A1n%2C%20Tucum%C3%A1n!5e0!3m2!1ses!2sar!4v1751243613444!5m2!1ses!2sar" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" className="w-full h-64 rounded-lg shadow"></iframe>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2117.1355893360833!2d-65.21134203830806!3d-26.821388858928767!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94225c3e1171fec9%3A0x170c325246c7e661!2sPcia%20de%20Corrientes%20942%2C%20T4000%20San%20Miguel%20de%20Tucum%C3%A1n%2C%20Tucum%C3%A1n!5e0!3m2!1ses!2sar!4v1751243613444!5m2!1ses!2sar" allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="w-full h-64 rounded-lg shadow"></iframe>
             </section>
 
             {/* Contacto */}
             <section className="text-center">
                 <h2 className="text-2xl font-semibold text-indigo-800 mb-3">¿Querés hablar con nosotros?</h2>
                 <p className="text-gray-700 mb-4">
-                    Podés escribirnos a nuestro <span class='text-green-500'>Whatsapp</span> o mandarnos un DM por <span className='text-pink-500'>Instagram</span> en los enlaces que encontrarás debajo.
+                    Podés escribirnos a nuestro <span className='text-green-500'>Whatsapp</span> o mandarnos un DM por <span className='text-pink-500'>Instagram</span> en los enlaces que encontrarás debajo.
                 </p>
             </section>
         </div>
