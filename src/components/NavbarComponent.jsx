@@ -5,6 +5,7 @@ import {
     XMarkIcon,
 } from '@heroicons/react/24/outline';
 import { Link, useNavigate } from 'react-router-dom';
+import logo from 'src\assets\images\d5-logo-black.webp'
 import axios from 'axios';
 
 const NavbarComponent = () => {
@@ -51,7 +52,7 @@ const NavbarComponent = () => {
                 <div className="flex justify-between items-center h-16 w-full">
                     <div className="flex-shrink-0 lg:w-1/3">
                         <Link to="/">
-                            <img className="h-8 w-auto" src="src/assets/images/d5-logo-black.webp" alt="Logo" />
+                            <img className="h-8 w-auto" src={logo} alt="Logo" />
                         </Link>
                     </div>
 

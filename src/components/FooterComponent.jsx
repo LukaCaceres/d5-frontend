@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaInstagram, FaWhatsapp } from 'react-icons/fa';
+import logo from 'src\assets\images\d5-logo-black.webp'
 const FooterComponent = () => {
     return (
         <footer className="bg-gray py-8 px-4">
@@ -7,7 +8,7 @@ const FooterComponent = () => {
                 {/* Columna izquierda: Logo */}
                 <div className="flex justify-center sm:justify-start">
                     <img
-                        src="src\assets\images\d5-logo-black.webp"
+                        src={logo}
                         alt="Logo Doble Cinco"
                         className="h-12"
                     />
