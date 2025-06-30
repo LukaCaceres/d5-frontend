@@ -43,7 +43,7 @@ const ResultadosPage = () => {
   };
 
   return (
-    <div className="p-4 max-w-7xl mx-auto mb-6">
+    <div className="p-4 max-w-7xl mx-auto h-screen mb-6">
       <h2 className="text-3xl font-semibold mb-4">
         Resultados de búsqueda para: <span className="text-indigo-800">"{query}"</span>
       </h2>
