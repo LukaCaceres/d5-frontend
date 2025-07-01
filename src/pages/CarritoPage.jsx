@@ -13,21 +13,45 @@ const CarritoPage = () => {
     const fetchCarrito = async () => {
         try {
             const res = await axios.get('https://doble-cinco-backend.onrender.com/api/carrito', {
-                headers: {
-                    'x-token': token
-                }
+                headers: { 'x-token': token }
             });
-            setCarrito(res.data.productos);
+
+            // Asegúrate que esto sea el array de productos
+            const productos = res.data.productos || [];
+
+
+            const agrupado = productos.reduce((acc, item) => {
+                const clave = item.producto._id + '-' + item.talle;
+                acc[clave] = acc[clave] || { ...item, cantidad: 0 };
+                acc[clave].cantidad += item.cantidad;
+                return acc;
+            }, {});
+
+            setCarrito(Object.values(agrupado)); // Seteá el array sin combinar los talles
         } catch (err) {
             console.error('Error al obtener el carrito:', err);
         }
     };
 
-    const actualizarCantidad = async (productoId, talle, nuevaCantidad) => {
+
+    const actualizarCantidad = async (productoId, talle, cambio) => {
+        const item = carrito.find(p => p.producto._id === productoId && p.talle === talle);
+        if (!item) return;
+        const cantidadActual = item.cantidad;
+        console.log('entra')
+        // stock por talle viene en producto.talles
+        const stockDisponible = item.producto.talles?.find(s => s.talle === talle)?.stock || 0;
+
+
+        const nuevaCantidad = cantidadActual + cambio;
+
+        if (cambio === 1 && nuevaCantidad > stockDisponible) return;
+        if (cambio === -1 && nuevaCantidad < 1) return;
+
         try {
             await axios.put(
                 'https://doble-cinco-backend.onrender.com/api/carrito/cantidad',
-                { productoId, cantidad: nuevaCantidad, talle },
+                { productoId, cantidad: cambio, talle },
                 { headers: { 'x-token': token } }
             );
             fetchCarrito();
@@ -35,7 +59,6 @@ const CarritoPage = () => {
             console.error('Error al actualizar cantidad:', err);
         }
     };
-
 
     const eliminarItem = async (productoId, talle) => {
         try {
@@ -55,10 +78,12 @@ const CarritoPage = () => {
     }, []);
 
     useEffect(() => {
-        const nuevoTotal = carrito.reduce((acc, item) => acc + item.producto.precio * item.cantidad, 0);
+        const nuevoTotal = carrito.reduce(
+            (acc, item) => acc + item.producto.precio * item.cantidad,
+            0
+        );
         setTotal(nuevoTotal);
     }, [carrito]);
-
     return (
         <div className="max-w-7xl mx-auto p-6 grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Productos */}
@@ -68,19 +93,18 @@ const CarritoPage = () => {
                     <p>No hay productos en tu carrito.</p>
                 ) : (
                     carrito.map(({ producto, cantidad, talle }) => (
-                        <div key={producto._id + talle} className="flex items-center gap-6 border p-4 rounded-lg shadow-sm">
+                        <div key={producto._id + talle.talle} className="flex items-center gap-6 border border-indigo-700 p-4 rounded-lg shadow-sm">
                             <img
                                 src={producto.imagenes?.[0] || 'https://via.placeholder.com/100'}
                                 alt={producto.nombre}
                                 className="w-20 h-20 object-cover rounded"
                             />
-
                             <div className="flex-1">
                                 <h3 className="font-semibold">{producto.nombre}</h3>
                                 <p className="text-sm text-gray-500">Talle: {talle}</p>
                                 <div className="flex items-center mt-2 gap-3">
                                     <button
-                                        onClick={() => actualizarCantidad(producto._id, talle, cantidad - 1)}
+                                        onClick={() => actualizarCantidad(producto._id, talle, -1)}
                                         disabled={cantidad <= 1}
                                         className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
                                     >
@@ -88,23 +112,30 @@ const CarritoPage = () => {
                                     </button>
                                     <span>{cantidad}</span>
                                     <button
-                                        onClick={() => actualizarCantidad(producto._id, talle, cantidad + 1)}
+                                        onClick={() => {
+                                            actualizarCantidad(producto._id, talle, 1);
+                                        }}
+                                        disabled={
+                                            cantidad >=
+                                            (producto.talles?.find(s => s.talle === talle)?.stock || 0)
+                                        }
                                         className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
                                     >
                                         +
                                     </button>
-
                                 </div>
                             </div>
+
                             <div className="flex items-center gap-2">
                                 <span className="font-semibold">${producto.precio * cantidad}</span>
                                 <TrashIcon
                                     className="w-5 h-5 text-red-600 cursor-pointer hover:text-red-800"
-                                    onClick={() => eliminarItem(producto._id, talle)}
+                                    onClick={() => eliminarItem(producto._id, talle.talle)}
                                 />
                             </div>
                         </div>
                     ))
+
                 )}
             </div>
 
