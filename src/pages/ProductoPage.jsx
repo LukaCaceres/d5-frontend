@@ -66,6 +66,7 @@ const ProductPage = () => {
                 },
                 { headers: { 'x-token': token } }
             );
+            console.log(talleSeleccionado)
             alert('Producto agregado al carrito');
         } catch (error) {
             console.error('Error al agregar al carrito:', error);

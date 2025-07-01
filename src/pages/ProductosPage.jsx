@@ -29,7 +29,6 @@ const ProductosPage = () => {
             if (filtroTalle) params.talle = filtroTalle;
             if (precioMin) params.precioMin = precioMin;
             if (precioMax) params.precioMax = precioMax;
-            console.log(params.categoria)
 
             const res = await axios.get('https://doble-cinco-backend.onrender.com/api/producto', { params });
             setProductos(res.data.productos);
