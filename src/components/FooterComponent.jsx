@@ -38,7 +38,7 @@ const FooterComponent = () => {
 
                 {/* Columna derecha: Copyright */}
                 <div className="text-center sm:text-right text-gray-500">
-                    &copy; {new Date().getFullYear()} Doble5 Store. Todos los derechos reservados.
+                    &copy; {new Date().getFullYear()} Doble Cinco Store. Todos los derechos reservados.
                 </div>
             </div>
         </footer>
