@@ -13,6 +13,7 @@ import ConocenosPage from './pages/ConocenosPage';
 import HomePage from './pages/HomePage';
 import ProductosPage from './pages/ProductosPage';
 import CarritoPage from './pages/CarritoPage';
+import AdminPage from './pages/AdminPage';
 
 function App() {
     return (
@@ -33,6 +34,7 @@ function App() {
                         <Route path="/producto/:id" element={<ProductoPage />} />
                         <Route path="/conocenos" element={<ConocenosPage />} />
                         <Route path='/carrito' element={<CarritoPage />} />
+                        <Route path='/admin' element={<AdminPage />} />
                         <Route path="*" element={<Error404Page />} />
                     </Routes>
                 </main>
