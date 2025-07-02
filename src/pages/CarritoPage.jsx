@@ -27,8 +27,6 @@ const CarritoPage = () => {
         }
     }
 
-    console.log(carrito)
-
     const actualizarCantidad = async (productoId, talle, cambio) => {
         const item = carrito.find((p) => p.producto._id === productoId && p.talle === talle)
         if (!item) return
