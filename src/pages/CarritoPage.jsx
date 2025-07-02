@@ -5,6 +5,7 @@ import axios from "axios"
 import { TrashIcon, MinusIcon, PlusIcon, ShoppingCartIcon, ArrowRightIcon } from "@heroicons/react/24/outline"
 import { useNavigate } from "react-router-dom"
 
+
 const CarritoPage = () => {
     const [carrito, setCarrito] = useState([])
     const [total, setTotal] = useState(0)
@@ -78,6 +79,27 @@ const CarritoPage = () => {
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
             </div>
         )
+    }
+    const handlePagar = async () => {
+        try {
+            const res = await axios.post(
+                "https://doble-cinco-backend.onrender.com/api/payment/crear_preferencia",
+                {},
+                {
+                    headers: { "x-token": token }
+                }
+            )
+
+            const { id } = res.data
+            if (id) {
+                navigate(`/checkout?preferenceId=${id}`)
+            } else {
+                alert("No se pudo generar la preferencia")
+            }
+        } catch (error) {
+            console.error("❌ Error al generar preferencia:", error)
+            alert("Hubo un problema al iniciar el pago.")
+        }
     }
 
     return (

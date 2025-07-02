@@ -1,49 +1,25 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react"
+import { useSearchParams } from "react-router-dom"
+import { initMercadoPago, Wallet } from "@mercadopago/sdk-react"
+
+initMercadoPago(import.meta.env.VITE_MP_PUBLIC_KEY)
 
 const CheckoutPage = () => {
-    const [loading, setLoading] = useState(true);
+  const [searchParams] = useSearchParams()
+  const preferenceId = searchParams.get("preferenceId")
 
-    useEffect(() => {
-        const iniciarPago = async () => {
-            try {
-                const token = localStorage.getItem("token");
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-white py-10">
+      <div className="max-w-md w-full p-6 bg-white rounded-xl shadow-md border border-gray-200">
+        <h1 className="text-2xl font-bold text-gray-900 mb-4">Finalizá tu compra</h1>
+        {preferenceId ? (
+          <Wallet initialization={{ preferenceId }} customization={{ texts: { valueProp: 'smart_option' } }} />
+        ) : (
+          <p className="text-red-500">No se encontró la preferencia de pago.</p>
+        )}
+      </div>
+    </div>
+  )
+}
 
-                const res = await axios.post(
-                    "https://doble-cinco-backend.onrender.com/api/payment/crear_preferencia",
-                    {},
-                    {
-                        headers: {
-                            "x-token": token
-                        }
-                    }
-                );
-
-                const { id } = res.data;
-
-                if (!id) throw new Error("No se obtuvo la preferencia.");
-
-                // Redireccionar a la URL de Checkout Pro
-                window.location.href = `https://www.mercadopago.com/checkout/v1/redirect?pref_id=${id}`;
-            } catch (error) {
-                console.error("Error al iniciar el pago:", error);
-                alert("Hubo un problema al iniciar el pago.");
-                setLoading(false);
-            }
-        };
-
-        iniciarPago();
-    }, []);
-
-    return (
-        <div className="flex justify-center items-center h-screen">
-            {loading ? (
-                <p className="text-xl font-medium">Redirigiendo a Mercado Pago...</p>
-            ) : (
-                <p className="text-red-500">No se pudo iniciar el pago.</p>
-            )}
-        </div>
-    );
-};
-
-export default CheckoutPage;
+export default CheckoutPage
