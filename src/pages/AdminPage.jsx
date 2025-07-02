@@ -15,6 +15,7 @@ import {
     TagIcon,
     ClipboardDocumentListIcon,
     PhotoIcon,
+    ShoppingBagIcon
 } from "@heroicons/react/24/outline"
 import Paginator from "../components/Paginator"
 
@@ -30,8 +31,8 @@ const TabsTrigger = ({ value, selected, onClick, children, icon: Icon }) => (
     <button
         onClick={() => onClick(value)}
         className={`flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-medium rounded-lg transition-all duration-200 whitespace-nowrap ${selected === value
-                ? "bg-indigo-600 text-white shadow-sm"
-                : "text-gray-600 hover:text-indigo-600 hover:bg-indigo-50"
+            ? "bg-indigo-600 text-white shadow-sm"
+            : "text-gray-600 hover:text-indigo-600 hover:bg-indigo-50"
             }`}
     >
         {Icon && <Icon className="h-4 w-4" />}
@@ -61,9 +62,12 @@ const AdminPage = () => {
         descripcion: "",
         categoria: "",
         precio: 0,
-        imagenes: [""], // Inicia con un campo vacío
-        talles: [{ talle: "", stock: 0 }], // Inicia con un campo vacío
+        imagenes: [""],
+        talles: [{ talle: "", stock: 0 }],
     })
+    const [ordenes, setOrdenes] = useState([])
+    const [totalOrdenes, setTotalOrdenes] = useState(0)
+    const [desdeOrdenes, setDesdeOrdenes] = useState(0)
     const [totalProductos, setTotalProductos] = useState(0)
     const [totalUsuarios, setTotalUsuarios] = useState(0)
     const [desdeProductos, setDesdeProductos] = useState(0)
@@ -233,6 +237,32 @@ const AdminPage = () => {
         setDesdeProductos(0) // Resetear a la primera página al realizar una nueva búsqueda
         fetchProductos()
     }
+    const fetchOrdenes = async () => {
+        try {
+            const res = await axios.get(
+                `https://doble-cinco-backend.onrender.com/api/orden?desde=${desdeOrdenes}&limite=${limite}`,
+                { headers: { "x-token": token } }
+            )
+            setOrdenes(res.data.ordenes || [])
+            setTotalOrdenes(res.data.total || 0)
+        } catch (err) {
+            console.error("Error al obtener órdenes:", err)
+        }
+    }
+    const getEstadoOrden = (estado) => {
+        switch (estado) {
+            case 'approved':
+                return { texto: 'Aprobado', color: 'bg-green-100 text-green-800', icono: CheckCircleIcon }
+            case 'pending':
+                return { texto: 'Pendiente', color: 'bg-yellow-100 text-yellow-800', icono: ClockIcon }
+            case 'rejected':
+                return { texto: 'Rechazado', color: 'bg-red-100 text-red-800', icono: XCircleIcon }
+            case 'in_process':
+                return { texto: 'En proceso', color: 'bg-blue-100 text-blue-800', icono: TruckIcon }
+            default:
+                return { texto: estado, color: 'bg-gray-100 text-gray-800', icono: ShoppingBagIcon }
+        }
+    }
 
     useEffect(() => {
         const loadData = async () => {
@@ -325,8 +355,8 @@ const AdminPage = () => {
                                                 <strong>Rol:</strong>{" "}
                                                 <span
                                                     className={`px-2 py-1 rounded-full text-xs font-medium ${usuarioBuscado.rol === "ADMIN_ROLE"
-                                                            ? "bg-red-100 text-red-800"
-                                                            : "bg-green-100 text-green-800"
+                                                        ? "bg-red-100 text-red-800"
+                                                        : "bg-green-100 text-green-800"
                                                         }`}
                                                 >
                                                     {usuarioBuscado.rol}
@@ -981,12 +1011,94 @@ const AdminPage = () => {
                     </TabsContent>
 
                     <TabsContent value="ordenes" selected={selectedTab}>
-                        <div className="bg-white rounded-xl shadow-sm border border-indigo-100 p-8 sm:p-12 text-center">
-                            <div className="mx-auto w-20 h-20 sm:w-24 sm:h-24 bg-indigo-100 rounded-full flex items-center justify-center mb-4 sm:mb-6">
-                                <ClipboardDocumentListIcon className="h-10 w-10 sm:h-12 sm:w-12 text-indigo-400" />
+                        <div className="space-y-6">
+                            {/* Orders Table */}
+                            <div className="bg-white rounded-xl shadow-sm border border-indigo-100 overflow-hidden">
+                                <div className="p-4 sm:p-6 border-b border-gray-200">
+                                    <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+                                        <ShoppingBagIcon className="h-5 w-5 text-indigo-600" />
+                                        Todas las órdenes ({totalOrdenes})
+                                    </h2>
+                                </div>
+                                <div className="overflow-x-auto">
+                                    <table className="min-w-full divide-y divide-gray-200">
+                                        <thead className="bg-gray-50">
+                                            <tr>
+                                                <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    ID
+                                                </th>
+                                                <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    Usuario
+                                                </th>
+                                                <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    Productos
+                                                </th>
+                                                <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    Total
+                                                </th>
+                                                <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    Estado
+                                                </th>
+                                                <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    Fecha
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="bg-white divide-y divide-gray-200">
+                                            {ordenes.map((orden) => {
+                                                const estado = getEstadoOrden(orden.estado_pago)
+                                                const EstadoIcono = estado.icono
+
+                                                return (
+                                                    <tr key={orden._id} className="hover:bg-gray-50 transition-colors duration-200">
+                                                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                                            {orden._id.substring(18, 24).toUpperCase()}
+                                                        </td>
+                                                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
+                                                            <div className="text-sm text-gray-900 font-medium">
+                                                                {orden.comprador?.email || 'No disponible'}
+                                                            </div>
+                                                        </td>
+                                                        <td className="px-4 sm:px-6 py-4">
+                                                            <div className="space-y-1">
+                                                                {orden.productos.map((producto, index) => (
+                                                                    <div key={index} className="text-sm text-gray-900">
+                                                                        <span className="font-medium">{producto.titulo}</span>
+                                                                        <span className="text-gray-500 ml-2">
+                                                                            (Talle: {producto.talle}, Cant: {producto.cantidad})
+                                                                        </span>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                        </td>
+                                                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
+                                                            <div className="text-sm font-semibold text-gray-900">
+                                                                ${orden.productos.reduce((total, prod) => total + (prod.precio_unitario * prod.cantidad), 0).toFixed(2)}
+                                                            </div>
+                                                        </td>
+                                                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
+                                                            <span className={`px-2 py-1 inline-flex items-center text-xs font-medium rounded-full ${estado.color}`}>
+                                                                <EstadoIcono className="h-3 w-3 mr-1" />
+                                                                {estado.texto}
+                                                            </span>
+                                                        </td>
+                                                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                            {new Date(orden.creadoEn).toLocaleDateString()}
+                                                        </td>
+                                                    </tr>
+                                                )
+                                            })}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div className="px-4 sm:px-6 py-4 border-t border-gray-200">
+                                    <Paginator
+                                        currentPage={Math.floor(desdeOrdenes / limite) + 1}
+                                        totalPages={Math.ceil(totalOrdenes / limite)}
+                                        onPageChange={(page) => setDesdeOrdenes((page - 1) * limite)}
+                                    />
+                                </div>
                             </div>
-                            <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">Gestión de órdenes</h3>
-                            <p className="text-sm sm:text-base text-gray-500">Esta funcionalidad estará disponible próximamente.</p>
                         </div>
                     </TabsContent>
                 </Tabs>
