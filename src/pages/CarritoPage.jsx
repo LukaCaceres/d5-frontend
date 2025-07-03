@@ -302,12 +302,13 @@ const CarritoPage = () => {
                                 </div>
 
                                 <button
-                                    onClick={() => navigate("/checkout")}
+                                    onClick={handlePagar}
                                     className="cursor-pointer w-full bg-indigo-600 text-white py-3 sm:py-4 px-4 sm:px-6 rounded-lg font-semibold hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors duration-200 flex items-center justify-center gap-2 text-sm sm:text-base"
                                 >
                                     Proceder al pago
                                     <ArrowRightIcon className="h-4 w-4 sm:h-5 sm:w-5" />
                                 </button>
+
 
                                 <div className="mt-3 sm:mt-4 text-center">
                                     <button
