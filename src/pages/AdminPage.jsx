@@ -1078,7 +1078,7 @@ const AdminPage = () => {
                             </td>
                             <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
                               <div className="text-sm text-white font-medium">
-                                {orden.comprador?.email || "No disponible"}
+                                {orden.usuario.nombre || "No disponible"}
                               </div>
                             </td>
                             <td className="px-4 sm:px-6 py-4">
