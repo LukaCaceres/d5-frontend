@@ -14,6 +14,10 @@ import HomePage from './pages/HomePage';
 import ProductosPage from './pages/ProductosPage';
 import CarritoPage from './pages/CarritoPage';
 import AdminPage from './pages/AdminPage';
+import CheckoutPage from './pages/CheckoutPage';
+import SuccessPage from './pages/SuccessPage';
+import FailurePage from './pages/FailurePage';
+import PendingPage from './pages/PendingPage';
 
 function App() {
     return (
@@ -35,6 +39,10 @@ function App() {
                         <Route path="/conocenos" element={<ConocenosPage />} />
                         <Route path='/carrito' element={<CarritoPage />} />
                         <Route path='/admin' element={<AdminPage />} />
+                        <Route path='/checkout' element={<CheckoutPage />} />
+                        <Route path="/success" element={<SuccessPage />} />
+                        <Route path="/failure" element={<FailurePage />} />
+                        <Route path="/pending" element={<PendingPage />} />
                         <Route path="*" element={<Error404Page />} />
                     </Routes>
                 </main>

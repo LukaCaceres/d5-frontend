@@ -5,6 +5,7 @@ import axios from "axios"
 import { TrashIcon, MinusIcon, PlusIcon, ShoppingCartIcon, ArrowRightIcon } from "@heroicons/react/24/outline"
 import { useNavigate } from "react-router-dom"
 
+
 const CarritoPage = () => {
     const [carrito, setCarrito] = useState([])
     const [total, setTotal] = useState(0)
@@ -26,8 +27,6 @@ const CarritoPage = () => {
             setLoading(false)
         }
     }
-
-    console.log(carrito)
 
     const actualizarCantidad = async (productoId, talle, cambio) => {
         const item = carrito.find((p) => p.producto._id === productoId && p.talle === talle)
@@ -80,6 +79,27 @@ const CarritoPage = () => {
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
             </div>
         )
+    }
+    const handlePagar = async () => {
+        try {
+            const res = await axios.post(
+                "https://doble-cinco-backend.onrender.com/api/payment/crear_preferencia",
+                {},
+                {
+                    headers: { "x-token": token }
+                }
+            )
+
+            const { id } = res.data
+            if (id) {
+                navigate(`/checkout?preferenceId=${id}`)
+            } else {
+                alert("No se pudo generar la preferencia")
+            }
+        } catch (error) {
+            console.error("❌ Error al generar preferencia:", error)
+            alert("Hubo un problema al iniciar el pago.")
+        }
     }
 
     return (
@@ -282,12 +302,13 @@ const CarritoPage = () => {
                                 </div>
 
                                 <button
-                                    onClick={() => navigate("/checkout")}
+                                    onClick={handlePagar}
                                     className="cursor-pointer w-full bg-indigo-600 text-white py-3 sm:py-4 px-4 sm:px-6 rounded-lg font-semibold hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors duration-200 flex items-center justify-center gap-2 text-sm sm:text-base"
                                 >
                                     Proceder al pago
                                     <ArrowRightIcon className="h-4 w-4 sm:h-5 sm:w-5" />
                                 </button>
+
 
                                 <div className="mt-3 sm:mt-4 text-center">
                                     <button
