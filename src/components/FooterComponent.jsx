@@ -1,5 +1,5 @@
 "use client"
-import { ChatBubbleLeftRightIcon, CameraIcon } from "@heroicons/react/24/outline"
+import { ChatBubbleLeftRightIcon, CameraIcon, DevicePhoneMobileIcon } from "@heroicons/react/24/outline"
 import logo from "../assets/images/d5-logo.webp"
 
 const FooterComponent = () => {
@@ -38,6 +38,17 @@ const FooterComponent = () => {
               <CameraIcon className="h-5 w-5 text-pink-400" />
             </div>
             <span className="font-medium">Instagram</span>
+          </a>
+          <a
+            href="http://tiktok.com/@doble_5inco"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center space-x-3 text-gray-300 hover:text-orange-400 transition-colors duration-200 group"
+          >
+            <div className="p-2 bg-orange-600/20 rounded-lg group-hover:bg-orange-600/30 transition-colors duration-200">
+              <DevicePhoneMobileIcon className="h-5 w-5 text-orange-400" />
+            </div>
+            <span className="font-medium">TikTok</span>
           </a>
         </div>
 

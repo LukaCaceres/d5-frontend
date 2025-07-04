@@ -180,6 +180,20 @@ const HomePage = () => {
 
                         <div className="space-y-8">
                             <div className="bg-gray-700/50 p-6 rounded-xl border border-gray-600">
+                                <h3 className="font-semibold text-xl text-indigo-400 mb-3">¿Cómo realizo mi compra?</h3>
+                                <p className="text-gray-300 leading-relaxed">
+                                    Busca tu producto por su nombre, categoria o fecha de lanzamiento, agregala al carrito y clickea en el boton de Mercado Pago para redirigirte al pago. Tené en cuenta las siguientes recomendaciones y condiciones antes de comprar:
+                                </p>
+                                <ul className="text-gray-200 font-semibold leading-relaxed">
+                                    <li>
+                                        1) Por cuestiones de seguridad y stock, solo se puede comprar un mismo talle por producto a la vez, es decir, si queres comprar 2 talles distintos tendras que realizar 2 compras.
+                                    </li>
+                                    <li>
+                                        2) Antes de realizar una compra, comunicate con nosotros por Whatsapp y consulta por el stock del talle que necesitas, de esta forma evitas comprar una prenda que tal vez justo se vendió y no llegó a actualizarse en tu navegador.
+                                    </li>
+                                </ul>
+                            </div>
+                            <div className="bg-gray-700/50 p-6 rounded-xl border border-gray-600">
                                 <h3 className="font-semibold text-xl text-indigo-400 mb-3">¿Hacen envíos a todo el país?</h3>
                                 <p className="text-gray-300 leading-relaxed">
                                     Sí, realizamos envíos a toda la Argentina. Para más detalles comunicate con nosotros mediante Whatsapp
@@ -225,6 +239,7 @@ const HomePage = () => {
                     {/* Size Table */}
                     <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-gray-700 overflow-hidden">
                         <div className="overflow-x-auto">
+                            <h2 className="text-white text-center text-xl p-2">Talles adultos</h2>
                             <table className="w-full text-sm text-center">
                                 <thead className="bg-indigo-600">
                                     <tr>
@@ -250,6 +265,41 @@ const HomePage = () => {
                                             <td className="py-4 px-6">{row.pecho}</td>
                                             <td className="py-4 px-6">{row.largo}</td>
                                             <td className="py-4 px-6">{row.mangas}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-gray-700 overflow-hidden">
+                        <div className="overflow-x-auto">
+                            <h2 className="text-white text-center text-xl p-2">Talles niños</h2>
+                            <table className="w-full text-sm text-center">
+
+                                <thead className="bg-indigo-600">
+                                    <tr>
+                                        <th className="py-4 px-6 text-white font-semibold">Talle</th>
+                                        <th className="py-4 px-6 text-white font-semibold">Pecho (cm)</th>
+                                        <th className="py-4 px-6 text-white font-semibold">Largo (cm)</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="text-gray-300">
+                                    {[
+                                        { talle: "4", pecho: "34", largo: "47" },
+                                        { talle: "6", pecho: "35", largo: "49" },
+                                        { talle: "8", pecho: "36", largo: "50.5" },
+                                        { talle: "10", pecho: "38", largo: "54" },
+                                        { talle: "12", pecho: "39.5", largo: "56" },
+                                        { talle: "14", pecho: "43", largo: "59" },
+                                        { talle: "16", pecho: "44.5", largo: "63" },
+                                    ].map((row, index) => (
+                                        <tr
+                                            key={row.talle}
+                                            className={`${index % 2 === 0 ? "bg-gray-700/30" : "bg-gray-700/50"} hover:bg-gray-600/50 transition-colors duration-200`}
+                                        >
+                                            <td className="py-4 px-6 font-semibold text-indigo-400">{row.talle}</td>
+                                            <td className="py-4 px-6">{row.pecho}</td>
+                                            <td className="py-4 px-6">{row.largo}</td>
                                         </tr>
                                     ))}
                                 </tbody>
