@@ -212,8 +212,7 @@ const HomePage = () => {
                             <div className="bg-gray-700/50 p-6 rounded-xl border border-gray-600">
                                 <h3 className="font-semibold text-xl text-indigo-400 mb-3">¿Cómo puedo pagar?</h3>
                                 <p className="text-gray-300 leading-relaxed">
-                                    Podes hacerlo mediante la web con tarjetas de débito/crédito, Mercado Pago, y transferencias
-                                    bancarias. Sino, de forma presencial con los mismos medios de pago o efectivo.
+                                    Podes hacerlo mediante la web a través de Mercado Pago. Sino, de forma presencial con tarjetas o efectivo.
                                 </p>
                             </div>
                         </div>
@@ -239,7 +238,7 @@ const HomePage = () => {
                     {/* Size Table */}
                     <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-gray-700 overflow-hidden">
                         <div className="overflow-x-auto">
-                            <h2 className="text-white text-center text-xl p-2">Talles adultos</h2>
+                            <h2 className="text-white text-center text-xl p-2">Talles adultos - camisetas</h2>
                             <table className="w-full text-sm text-center">
                                 <thead className="bg-indigo-600">
                                     <tr>
@@ -273,7 +272,7 @@ const HomePage = () => {
                     </div>
                     <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-gray-700 overflow-hidden">
                         <div className="overflow-x-auto">
-                            <h2 className="text-white text-center text-xl p-2">Talles niños</h2>
+                            <h2 className="text-white text-center text-xl p-2">Talles niños - camisetas</h2>
                             <table className="w-full text-sm text-center">
 
                                 <thead className="bg-indigo-600">
